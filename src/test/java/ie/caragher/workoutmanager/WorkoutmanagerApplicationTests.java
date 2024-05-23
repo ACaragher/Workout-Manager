@@ -1,0 +1,13 @@
+package ie.caragher.workoutmanager;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class WorkoutmanagerApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
