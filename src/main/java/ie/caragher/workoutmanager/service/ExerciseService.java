@@ -12,4 +12,8 @@ public interface ExerciseService {
     Exercise save(Exercise theExercise);
 
     void deleteById(int theId);
+
+    List<String> getDistinctWorkoutNames();
+
+    List<String> getExerciseNamesByWorkoutName(String theWorkoutName);
 }

@@ -21,18 +21,18 @@ public class Exercise {
     @Column(name = "exercise_name")
     private String exerciseName;
 
-    @Column(name="date")
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
+    @Column(name="exercise_date")
+    @DateTimeFormat(pattern = "yyyy/mm/dd")
     private LocalDate date;
 
     @Column(name = "weight")
-    private double weight;
+    private Double weight;
 
-    @Column(name = "set")
-    private int set;
+    @Column(name = "set_number")
+    private Integer set;
 
     @Column(name = "reps")
-    private int reps;
+    private Integer reps;
 
     public Exercise() {
 
@@ -79,7 +79,7 @@ public class Exercise {
         this.date = date;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return this.weight;
     }
 
@@ -87,7 +87,7 @@ public class Exercise {
         this.weight = weight;
     }
 
-    public int getSet() {
+    public Integer getSet() {
         return this.set;
     }
 
@@ -95,7 +95,7 @@ public class Exercise {
         this.set = set;
     }
 
-    public int getReps() {
+    public Integer getReps() {
         return this.reps;
     }
 

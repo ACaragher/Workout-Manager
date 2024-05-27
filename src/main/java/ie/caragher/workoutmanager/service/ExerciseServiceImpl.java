@@ -47,4 +47,14 @@ public class ExerciseServiceImpl implements ExerciseService {
     public void deleteById(int theId) {
         exerciseRepository.deleteById(theId);
     }
+
+    @Override
+    public List<String> getDistinctWorkoutNames() {
+        return exerciseRepository.getDistinctWorkoutNames();
+    }
+
+    @Override
+    public List<String> getExerciseNamesByWorkoutName(String theWorkoutName) {
+        return exerciseRepository.getDistinctExerciseNamesByWorkoutName(theWorkoutName);
+    }
 }
