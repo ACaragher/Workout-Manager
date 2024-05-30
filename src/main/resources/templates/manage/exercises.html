@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-        <h3>Select a workout:</h3>
+        <h3>Select Exercise:</h3>
         <br><br>
         <form th:action="@{/manage/addExercise}" method="post">
             <select name="theExerciseName">
@@ -19,6 +19,7 @@
             <br><br>
             <input type="submit" class="btn btn-info col-2" value="Submit"/>
         </form>
+        <a type="submit" th:href="@{/manage/selectWorkout}" class="btn btn-dark col-2">Return</a>
     </div>
 </body>
 </html>

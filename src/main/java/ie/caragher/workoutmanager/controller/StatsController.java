@@ -11,6 +11,7 @@ import ie.caragher.workoutmanager.service.ExerciseService;
 @RequestMapping("/stats")
 public class StatsController {
 
+    @SuppressWarnings("unused")
     private ExerciseService exerciseService;
 
     public StatsController(ExerciseService theExerciseService) {

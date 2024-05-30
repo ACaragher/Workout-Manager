@@ -47,6 +47,13 @@ public class Exercise {
         this.reps = reps;
     }
     
+    public Exercise(Exercise oldExercise) {
+        this.workoutName = oldExercise.getWorkoutName();
+        this.exerciseName = oldExercise.getExerciseName();
+        this.weight = oldExercise.getWeight();
+        this.set = oldExercise.getSet() + 1;
+    }
+
     public int getId() {
         return this.id;
     }

@@ -9,15 +9,21 @@
 </head>
 <body>
     <div class="container">
-        <h3>Enter information:</h3>
+        <h3>Enter </h3>
+        <h3 th:text="${theExercise.exerciseName}"></h3>
+        <h3> Information</h3>
         <br><br>
         <form action="#" th:action="@{/manage/saveExercise}"
-                            th:object="${exercise}" method="post">
+                            th:object="${theExercise}" method="post">
             <input type="text" th:field="*{weight}" class="form-control mb-4 w-25" placeholder="Weight (kg):">
             <input type="text" th:field="*{set}" class="form-control mb-4 w-25" placeholder="Set number:">
             <input type="text" th:field="*{reps}" class="form-control mb-4 w-25" placeholder="Number of reps:">
             <br><br>
             <input type="submit" class="btn btn-info col-2" value="Submit"/>
+        </form>
+        <form action="#" th:action="@{/manage/selectExercise}" method="post">
+            <button type="submit" th:name="theWorkoutName" th:value="${theExercise.workoutName}"
+                    class="btn btn-dark col-2">Return</button>
         </form>
     </div>
 </body>
