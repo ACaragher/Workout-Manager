@@ -1,6 +1,7 @@
 package ie.caragher.workoutmanager.controller;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -48,16 +49,37 @@ public class ExerciseController {
     @SuppressWarnings("null")
     @RequestMapping(value = "/addExercise", method={RequestMethod.POST, RequestMethod.GET})
     public String addExercise(@RequestParam String theExerciseName, Model theModel) {
+
         Exercise theExercise = (Exercise) theModel.getAttribute("theExercise");
         theExercise.setExerciseName(theExerciseName);
+        List<Exercise> allExercises = exerciseService.findAllByExerciseName(theExerciseName);
+
+        int i = 0;
+        LocalDate firstDate = allExercises.get(0).getDate();
+        List<Exercise> todayExercises = new ArrayList<>();
+        while(i < allExercises.size() && firstDate.equals(allExercises.get(i).getDate())) {
+            todayExercises.add(allExercises.get(i));
+            i++;
+        }
+
+        List<Exercise> prevExercises = new ArrayList<>();
+        if(i < allExercises.size()) {
+            LocalDate prevDate = allExercises.get(i).getDate();
+            while(i < allExercises.size() && prevDate.isEqual(allExercises.get(i).getDate())) {
+                prevExercises.add(allExercises.get(i));
+                i ++;
+            }
+        }
+
         theModel.addAttribute("theExercise", theExercise);
+        theModel.addAttribute("todayExercises", todayExercises);
+        theModel.addAttribute("prevExercises", prevExercises);
         return "manage/add";
     }
 
     @PostMapping("/saveExercise")
     public String saveExercise(@ModelAttribute("theExercise") Exercise theExercise, Model theModel, RedirectAttributes redirectAttributes) {
         theExercise.setDate(LocalDate.now());
-        System.out.println("\n\nSAVE EXERCISE\n" + theExercise + "\n\n\n");
         exerciseService.save(theExercise);
         Exercise nextExercise = new Exercise(theExercise);
         theModel.addAttribute("theExercise", nextExercise);

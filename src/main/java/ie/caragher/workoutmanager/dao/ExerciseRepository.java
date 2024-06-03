@@ -13,4 +13,8 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
 
     @Query(value="SELECT DISTINCT exercise_name FROM exercise WHERE workout_name = ?1", nativeQuery=true)
     List<String> getDistinctExerciseNamesByWorkoutName(String theWorkoutName);
+
+    @Query(value="SELECT * FROM exercise WHERE exercise_name = ?1 Order By exercise_date desc, set_number desc", nativeQuery = true)
+    List<Exercise> findAllByExerciseName(String exerciseName);
+
 }

@@ -9,6 +9,8 @@ public interface ExerciseService {
 
     Exercise findById(int theId);
 
+    List<Exercise> findAllByExerciseName(String exerciseName);
+
     Exercise save(Exercise theExercise);
 
     void deleteById(int theId);

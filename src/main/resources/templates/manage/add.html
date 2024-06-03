@@ -31,5 +31,52 @@
                 </form>
             </div>
     </div>
+    <br><br><br>
+    <div class="container centre-box">
+        <h3>Today:</h3>
+    </div>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Weight(kg)</th>
+                    <th>Set</th>
+                    <th>Reps</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tempExercise : ${todayExercises}">
+                    <td th:text="${tempExercise.weight}"/>
+                    <td th:text="${tempExercise.set}"/>
+                    <td th:text="${tempExercise.reps}"/>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br><br><br>
+    <div class="container centre-box">
+        <h3>Previous</h3>
+    </div>
+    <div class="container">
+        <hr>
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Weight(kg)</th>
+                    <th>Set</th>
+                    <th>Reps</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="tempExercise : ${prevExercises}">
+                    <td th:text="${tempExercise.date}"/>
+                    <td th:text="${tempExercise.weight}"/>
+                    <td th:text="${tempExercise.set}"/>
+                    <td th:text="${tempExercise.reps}"/>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

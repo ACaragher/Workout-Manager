@@ -39,6 +39,11 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
+    public List<Exercise> findAllByExerciseName(String exerciseName) {
+        return exerciseRepository.findAllByExerciseName(exerciseName);
+    }
+
+    @Override
     public Exercise save(Exercise theExercise) {
         return exerciseRepository.save(theExercise);
     }
@@ -57,4 +62,6 @@ public class ExerciseServiceImpl implements ExerciseService {
     public List<String> getExerciseNamesByWorkoutName(String theWorkoutName) {
         return exerciseRepository.getDistinctExerciseNamesByWorkoutName(theWorkoutName);
     }
+
+
 }
