@@ -39,7 +39,8 @@ public class ExerciseController {
     @PostMapping("/selectExercise")
     public String selectExercise(@RequestParam String theWorkoutName, Model theModel) {
         Exercise theExercise = new Exercise();
-        theExercise.setWorkoutName(theWorkoutName); 
+        theExercise.setWorkoutName(theWorkoutName);
+        theExercise.setSet(1);
         List<String> theExercises = exerciseService.getExerciseNamesByWorkoutName(theWorkoutName);
         theModel.addAttribute("exercises", theExercises);
         theModel.addAttribute("theExercise", theExercise);
@@ -57,9 +58,10 @@ public class ExerciseController {
         int i = 0;
         LocalDate firstDate = allExercises.get(0).getDate();
         List<Exercise> todayExercises = new ArrayList<>();
-        while(i < allExercises.size() && firstDate.equals(allExercises.get(i).getDate())) {
+        while(i < allExercises.size() && firstDate.equals(LocalDate.now())) {
             todayExercises.add(allExercises.get(i));
             i++;
+            firstDate = allExercises.get(i).getDate();
         }
 
         List<Exercise> prevExercises = new ArrayList<>();
