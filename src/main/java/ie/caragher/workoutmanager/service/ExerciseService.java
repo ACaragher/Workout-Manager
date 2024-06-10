@@ -9,7 +9,9 @@ public interface ExerciseService {
 
     Exercise findById(int theId);
 
-    List<Exercise> findAllByExerciseName(String exerciseName);
+    List<Exercise> findAllByExerciseNameDesc(String exerciseName);
+
+    List<Exercise> findAllByExerciseNameAsc(String exerciseName);
 
     Exercise save(Exercise theExercise);
 

@@ -2,6 +2,7 @@ package ie.caragher.workoutmanager.controller;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -48,12 +49,12 @@ public class ExerciseController {
     }
 
     @SuppressWarnings("null")
-    @RequestMapping(value = "/addExercise", method={RequestMethod.POST, RequestMethod.GET})
+    @RequestMapping(value = "/exerciseAction", method={RequestMethod.POST, RequestMethod.GET}, params="action=Add")
     public String addExercise(@RequestParam String theExerciseName, Model theModel) {
 
         Exercise theExercise = (Exercise) theModel.getAttribute("theExercise");
         theExercise.setExerciseName(theExerciseName);
-        List<Exercise> allExercises = exerciseService.findAllByExerciseName(theExerciseName);
+        List<Exercise> allExercises = exerciseService.findAllByExerciseNameDesc(theExerciseName);
 
         int i = 0;
         LocalDate firstDate = allExercises.get(0).getDate();
@@ -80,7 +81,7 @@ public class ExerciseController {
     }
 
     @PostMapping("/saveExercise")
-    public String saveExercise(@ModelAttribute("theExercise") Exercise theExercise, Model theModel, RedirectAttributes redirectAttributes) {
+    public String saveExercise(@ModelAttribute Exercise theExercise, Model theModel, RedirectAttributes redirectAttributes) {
         theExercise.setDate(LocalDate.now());
         exerciseService.save(theExercise);
         Exercise nextExercise = new Exercise(theExercise);
@@ -89,4 +90,28 @@ public class ExerciseController {
         return "redirect:/manage/addExercise";
     }
 
+    @RequestMapping(value = "/exerciseAction", method={RequestMethod.POST, RequestMethod.GET}, params="action=Stats")
+    public String selectWorkout(@RequestParam String theExerciseName, Model theModel) {
+        List<Exercise> theExercises = exerciseService.findAllByExerciseNameAsc(theExerciseName);
+        theModel.addAttribute("theExerciseName", theExerciseName);
+        theModel.addAttribute("chartData", getChartData(theExercises));
+        theModel.addAttribute("sixMonthChange", 45);
+        theModel.addAttribute("oneYearChange", 70);
+        theModel.addAttribute("allTimeChange", 95);
+        Collections.reverse(theExercises);
+        theModel.addAttribute("tableData", theExercises);
+        return "manage/stats";
+    }
+   
+    private List<List<Object>> getChartData(List<Exercise> theExercises) {
+        List<List<Object>> listExercises = new ArrayList<>();
+        LocalDate prevDate = LocalDate.of(0, 1, 1);
+        for(Exercise exercise : theExercises) {
+            if(!exercise.getDate().equals(prevDate)) {
+                listExercises.add(List.of(exercise.getDate(), exercise.getWeight()));
+                prevDate = exercise.getDate();
+            }
+        }
+        return listExercises;
+    }
 }

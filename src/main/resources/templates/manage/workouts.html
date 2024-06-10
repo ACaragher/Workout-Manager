@@ -19,7 +19,7 @@
                 <select name="theWorkoutName" class="item dropdown">
                     <option th:each="workout : ${workouts}" th:value="${workout}" th:text="${workout}"></option>
                 </select>
-                <div class="submit-return">
+                <div class="centre-buttons" style="height: 110px;">
                     <input type="submit" class="btn btn-lg item submit" value="Submit"/>
                     <a type="submit" th:href="@{/}" class="btn btn-lg item return">Return</a>
                 </div>
@@ -27,6 +27,7 @@
         </div>
     </div>
     <div class="footer">
+        <hr>
         <a style="color: rgb(54, 81, 178);" href="//www.linkedin.com/in/adamcaragher/" role="button">
             <i class="fab fa-linkedin fa-2x"></i>
         </a>

@@ -3,6 +3,8 @@ body {
     flex-direction: column;
     height: 100vh;
     justify-content: space-between;
+    background: rgb(229,247,252);
+    background: linear-gradient(0deg, rgba(229,247,252,1) 0%, rgba(238,251,255,1) 26%, rgba(245,253,255,1) 71%, rgba(247,250,251,1) 100%);
 }
 
 .header {
@@ -24,14 +26,21 @@ body {
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    width: 100;
 }
 
-.submit-return {
+.centre-buttons {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 120px;
+    height: 170px;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+h4 {
+    font-weight: 600;
 }
 
 .item {

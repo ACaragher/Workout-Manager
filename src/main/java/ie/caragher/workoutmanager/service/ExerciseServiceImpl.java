@@ -39,8 +39,13 @@ public class ExerciseServiceImpl implements ExerciseService {
     }
 
     @Override
-    public List<Exercise> findAllByExerciseName(String exerciseName) {
-        return exerciseRepository.findAllByExerciseName(exerciseName);
+    public List<Exercise> findAllByExerciseNameDesc(String exerciseName) {
+        return exerciseRepository.findAllByExerciseNameDesc(exerciseName);
+    }
+
+    @Override
+    public List<Exercise> findAllByExerciseNameAsc(String exerciseName) {
+        return exerciseRepository.findAllByExerciseNameAsc(exerciseName);
     }
 
     @Override
