@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -90,14 +91,23 @@ public class ExerciseController {
         return "redirect:/manage/addExercise";
     }
 
+    @SuppressWarnings("null")
     @RequestMapping(value = "/exerciseAction", method={RequestMethod.POST, RequestMethod.GET}, params="action=Stats")
     public String selectWorkout(@RequestParam String theExerciseName, Model theModel) {
         List<Exercise> theExercises = exerciseService.findAllByExerciseNameAsc(theExerciseName);
         theModel.addAttribute("theExerciseName", theExerciseName);
         theModel.addAttribute("chartData", getChartData(theExercises));
-        theModel.addAttribute("sixMonthChange", 45);
-        theModel.addAttribute("oneYearChange", 70);
-        theModel.addAttribute("allTimeChange", 95);
+        List<Exercise> threeMonthExercises = exerciseService.getExercisesOnDate(theExerciseName, LocalDate.now().minusMonths(3));
+        List<Exercise> sixMonthExercises = exerciseService.getExercisesOnDate(theExerciseName, LocalDate.now().minusMonths(6));
+        List<Exercise> oneYearExercises =  exerciseService.getExercisesOnDate(theExerciseName, LocalDate.now().minusYears(1));
+        List<Exercise> allTimeExercies = exerciseService.getExercisesOnDate(theExerciseName, LocalDate.now().minusYears(100));
+
+        Double recentMaxWeight = getMaxWeight(exerciseService.getMostRecentExercises(theExerciseName));
+        theModel.addAttribute("theWorkoutName", ((Exercise) theModel.getAttribute("theExercise")).getWorkoutName());
+        theModel.addAttribute("threeMonthChange", recentMaxWeight - getMaxWeight(threeMonthExercises));        
+        theModel.addAttribute("sixMonthChange", recentMaxWeight - getMaxWeight(sixMonthExercises));
+        theModel.addAttribute("oneYearChange", recentMaxWeight - getMaxWeight(oneYearExercises));
+        theModel.addAttribute("allTimeChange", recentMaxWeight - getMaxWeight(allTimeExercies));
         Collections.reverse(theExercises);
         theModel.addAttribute("tableData", theExercises);
         return "manage/stats";
@@ -105,13 +115,23 @@ public class ExerciseController {
    
     private List<List<Object>> getChartData(List<Exercise> theExercises) {
         List<List<Object>> listExercises = new ArrayList<>();
-        LocalDate prevDate = LocalDate.of(0, 1, 1);
-        for(Exercise exercise : theExercises) {
-            if(!exercise.getDate().equals(prevDate)) {
-                listExercises.add(List.of(exercise.getDate(), exercise.getWeight()));
-                prevDate = exercise.getDate();
+        for(int i = 0; i < theExercises.size(); i++) {
+            Double maxWeight = theExercises.get(i).getWeight();
+            while(i < theExercises.size() - 1 && theExercises.get(i).getDate().equals(theExercises.get(i+1).getDate())) {
+                maxWeight = Math.max(maxWeight, theExercises.get(i + 1).getWeight());
+                i++;
             }
+            listExercises.add(List.of(theExercises.get(i).getDate(), maxWeight));
         }
         return listExercises;
     }
-}
+
+    private Double getMaxWeight(List<Exercise> theExercises) {
+        Double max = 0.0;
+        for(Exercise exercise : theExercises) {
+            max = Math.max(max, exercise.getWeight());
+        }
+        System.out.println("\n\n");
+        return max;
+    }
+} 

@@ -10,94 +10,108 @@
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 </head>
 <body class="container">
-    <script th:inline="javascript">
-        google.charts.load('current', {packages : [ 'corechart', 'bar' ]});
-        google.charts.setOnLoadCallback(drawLineChart);
+    <div class="container content">
+        <script th:inline="javascript">
+            google.charts.load('current', {packages : [ 'corechart', 'bar' ]});
+            google.charts.setOnLoadCallback(drawLineChart);
 
-        function drawLineChart() {
-            var data = new google.visualization.DataTable();
-            data.addColumn('string', 'Date');
-            data.addColumn('number', 'Weight');
+            function drawLineChart() {
+                var data = new google.visualization.DataTable();
+                data.addColumn('date', 'Date');
+                data.addColumn('number', 'Weight');
 
-            data.addRows([[${chartData}]]);
-            var options = {
-                vAxis: {
-                    title: 'Weight(kg)'
-                },
-                hAxis: {
-                    title: 'Time'
-                },
-                height: 350,
-                colors: ['#3651B2', '#007329'],
-                pointSize: 5
-            };
+                const resultArray = [[${chartData}]].map(item => {
+                    const weight = item[1];
+                    const dateString = item[0];
+                    const dateObject = new Date(dateString);
+                    return [dateObject, weight];
+                })
+                
+                console.log(resultArray);
 
-            var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-        }
-    </script>
-    <div class="centre-box">
+                data.addRows(resultArray);
+                var options = {
+                    vAxis: {
+                        title: 'Weight(kg)'
+                    },
+                    hAxis: {
+                        title: 'Date',
+                        format: "dd-MM-yyyy"
+                    },
+                    height: 350,
+                    colors: ['#3651B2', '#007329'],
+                    pointSize: 5
+                };
+
+                var chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+                chart.draw(data, options);
+            }
+        </script>
         <div class="centre-box">
-            <div class="container centre-items header">
-                <h2 th:utext="${theExerciseName}"></h2>
+            <div class="centre-box">
+                <div class="container centre-items header">
+                    <h2 th:utext="${theExerciseName}"></h2>
+                </div>
             </div>
-        </div>
-        <hr>
-        <div class="centre-items" style="margin-top: 20px; margin-bottom: 10px;">
-            <h4>Weight Over Time:</h4>
-        </div>
-        <div id="chart_div"></div>
-        <div class="container">
-            <div class="centre-items" style="margin-top: 20px;">
-                <h4>Weight Change:</h4>
+            <hr>
+            <div class="centre-items" style="margin-top: 20px; margin-bottom: 0px; padding-bottom: 0px;">
+                <h4>Max Weight Over Time:</h4>
             </div>
-            <div class="centre-items">
-                <table class="table table-bordered" style="text-align: center; width: 50%; align-self: center;">
+            <div id="chart_div"></div>
+            <div class="container">
+                <div class="centre-items" style="margin-top: 30px; margin-bottom: 10px;">
+                    <h4>Weight Change:</h4>
+                </div>
+                <div class="centre-items" style="margin-bottom: 10px;">
+                    <table class="table table-bordered" style="text-align: center; width: 50%; align-self: center;">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>3 Months</th>
+                                <th>6 Months</th>
+                                <th>1 Year</th>
+                                <th>All Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td th:text="${threeMonthChange}"/>
+                                <td th:text="${sixMonthChange}"/>
+                                <td th:text="${oneYearChange}"/>
+                                <td th:text="${allTimeChange}"/>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <form action="#" th:action="@{/manage/selectExercise}" method="post" class="centre-items" style="margin-bottom: 50px;">
+                    <button type="submit" th:name="theWorkoutName" th:value="${theWorkoutName}"
+                            class="btn btn-dark btn-lg item return">Return</button>
+                </form>
+            </div>
+            <div class="container">
+                <div class="centre-items" style="margin-top: 40px; margin-bottom: 10px;">
+                    <h4>All Entries:</h4>
+                </div>
+                <table class="table table-bordered">
                     <thead class="table-dark">
                         <tr>
-                            <th>6 Months</th>
-                            <th>1 Year</th>
-                            <th>All Time</th>
+                            <th>Date</th>
+                            <th>Weight(kg)</th>
+                            <th>Set #</th>
+                            <th>Reps</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td th:text="${sixMonthChange}"/>
-                            <td th:text="${oneYearChange}"/>
-                            <td th:text="${allTimeChange}"/>
+                        <tr th:each="tempExercise : ${tableData}">
+                            <td th:text="${tempExercise.date}"/>
+                            <td th:text="${tempExercise.weight}"/>
+                            <td th:text="${tempExercise.set}"/>
+                            <td th:text="${tempExercise.reps}"/>
                         </tr>
                     </tbody>
                 </table>
             </div>
-        </div>
-        <div style="margin-top: 20px;">
-            <form action="#" th:action="@{/manage/selectExercise}" method="post" class="centre-items">
-                <button type="submit" th:name="theWorkoutName" th:value="${theExercise.workoutName}"
-                        class="btn btn-dark btn-lg item return">Return</button>
-            </form>
-        </div>
-        <div class="container">
-            <div class="centre-items" style="margin-top: 40px; margin-bottom: 10px;">
-                <h4>All Entries:</h4>
-            </div>
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Weight(kg)</th>
-                        <th>Set</th>
-                        <th>Reps</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="tempExercise : ${tableData}">
-                        <td th:text="${tempExercise.date}"/>
-                        <td th:text="${tempExercise.weight}"/>
-                        <td th:text="${tempExercise.set}"/>
-                        <td th:text="${tempExercise.reps}"/>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
     <div class="footer">

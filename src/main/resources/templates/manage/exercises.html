@@ -9,25 +9,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.0/css/all.css">
 </head>
 <body class="container">
-    <div class="centre-box">
-        <div class="container centre-items header">
-            <h2>Select Exercise:</h2>
-        </div>
-        <hr>
-        <div class="container centre-items">
-            <form th:action="@{/manage/exerciseAction}" method="post" class="full-form">
-                <div class="centre-items">
-                    <select name="theExerciseName" class="item dropdown">
-                        <option th:each="exercise : ${exercises}" th:value="${exercise}" th:text="${exercise}"></option>
-                    </select>
-                    <div class="centre-buttons">
-                        <input type="hidden" th:name="theWorkoutName" th:value="${workoutName}"/>
-                        <input type="submit" class="btn btn-lg item submit" name="action" value="Add"/>
-                        <input type="submit" class="btn btn-lg item submit" name="action" value="Stats"/>
-                        <a type="submit" th:href="@{/manage/selectWorkout}" class="btn btn-lg item return">Return</a>
+    <div class="content">
+        <div class="centre-box">
+            <div class="container centre-items header">
+                <h2>Select Exercise:</h2>
+            </div>
+            <hr>
+            <div class="container centre-items">
+                <form th:action="@{/manage/exerciseAction}" method="post" class="full-form">
+                    <div class="centre-items">
+                        <select name="theExerciseName" class="item dropdown">
+                            <option th:each="exercise : ${exercises}" th:value="${exercise}" th:text="${exercise}"></option>
+                        </select>
+                        <div class="centre-buttons">
+                            <input type="hidden" th:name="theWorkoutName" th:value="${workoutName}"/>
+                            <input type="submit" class="btn btn-lg item submit" name="action" value="Add"/>
+                            <input type="hidden" th:name="theWorkoutName" th:value="${workoutName}"/>
+                            <input type="submit" class="btn btn-lg item submit" name="action" value="Stats"/>
+                            <a type="submit" th:href="@{/manage/selectWorkout}" class="btn btn-lg item return">Return</a>
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
     <div class="footer">

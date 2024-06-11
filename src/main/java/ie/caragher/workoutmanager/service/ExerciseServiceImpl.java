@@ -1,5 +1,6 @@
 package ie.caragher.workoutmanager.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -68,5 +69,13 @@ public class ExerciseServiceImpl implements ExerciseService {
         return exerciseRepository.getDistinctExerciseNamesByWorkoutName(theWorkoutName);
     }
 
+    @Override
+    public List<Exercise> getExercisesOnDate(String theExerciseName, LocalDate date) {
+        return exerciseRepository.getExercisesOnDate(theExerciseName, date);
+    }
 
+    @Override
+    public List<Exercise> getMostRecentExercises(String theExerciseName) {
+        return exerciseRepository.getMostRecentExercises(theExerciseName);
+    }
 }

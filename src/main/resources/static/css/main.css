@@ -3,8 +3,18 @@ body {
     flex-direction: column;
     height: 100vh;
     justify-content: space-between;
-    background: rgb(229,247,252);
-    background: linear-gradient(0deg, rgba(229,247,252,1) 0%, rgba(238,251,255,1) 26%, rgba(245,253,255,1) 71%, rgba(247,250,251,1) 100%);
+    background-color: rgb(241, 246, 248);
+}
+
+.content {
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-bottom: 30px;
+
 }
 
 .header {
@@ -12,6 +22,7 @@ body {
 }
 
 .footer {
+    margin-top: auto;
     width: 100%;
     margin-bottom: 10px;
     text-align: center;

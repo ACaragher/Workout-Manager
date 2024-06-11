@@ -8,79 +8,81 @@
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.0/css/all.css">
 </head>
-<body class="container">
-    <div class="centre-box">
-        <div class="container centre-items header">
-            <h2 th:text="${theExercise.exerciseName}"> </h2>
-        </div>
-        <hr>
-        <br>
-        <div class="container">
-            <form action="#" th:action="@{/manage/saveExercise}"
-                            th:object="${theExercise}" method="post">
-                <div class="centre-items">
-                    <input type="text" th:field="*{weight}" class="form-control mb-4 w-25 textbox item" placeholder="Weight (kg):">
-                    <input type="text" th:field="*{set}" class="form-control mb-4 w-25 textbox item" placeholder="Set number:">
-                    <input type="text" th:field="*{reps}" class="form-control mb-4 w-25 textbox item" placeholder="Number of reps:">
-                </div>
-                <div class="centre-items">
-                    <input type="submit" class="btn btn-lg item submit" value="Submit"/>
-                    </form>
-                    <form action="#" th:action="@{/manage/selectExercise}" method="post" class="centre-items">
-                        <button type="submit" th:name="theWorkoutName" th:value="${theExercise.workoutName}"
-                                class="btn btn-dark btn-lg item return">Return</button>
-                    </form>
-                </div>
-        </div>
-        <div class="container centre-items header">
-            <h3>Today:</h3>
-        </div>
-        <hr>
-        <div class="container">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Weight(kg)</th>
-                        <th>Set</th>
-                        <th>Reps</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="tempExercise : ${todayExercises}">
-                        <td th:text="${tempExercise.weight}"/>
-                        <td th:text="${tempExercise.set}"/>
-                        <td th:text="${tempExercise.reps}"/>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <br><br><br>
-        <div class="container centre-items header">
-            <h3>Previous:</h3>
-        </div>
-        <hr>
-        <div class="container">
-            <table class="table table-bordered">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Date</th>
-                        <th>Weight(kg)</th>
-                        <th>Set</th>
-                        <th>Reps</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="tempExercise : ${prevExercises}">
-                        <td th:text="${tempExercise.date}"/>
-                        <td th:text="${tempExercise.weight}"/>
-                        <td th:text="${tempExercise.set}"/>
-                        <td th:text="${tempExercise.reps}"/>
-                    </tr>
-                </tbody>
-            </table>
+<body>
+    <div class="container content">
+        <div class="centre-box">
+            <div class="container centre-items header">
+                <h2 th:text="${theExercise.exerciseName}"> </h2>
+            </div>
+            <hr>
+            <br>
+            <div class="container">
+                <form action="#" th:action="@{/manage/saveExercise}"
+                                th:object="${theExercise}" method="post">
+                    <div class="centre-items">
+                        <input type="text" th:field="*{weight}" class="form-control mb-4 w-25 textbox item" placeholder="Weight (kg):">
+                        <input type="text" th:field="*{set}" class="form-control mb-4 w-25 textbox item" placeholder="Set number:">
+                        <input type="text" th:field="*{reps}" class="form-control mb-4 w-25 textbox item" placeholder="Number of reps:">
+                    </div>
+                    <div class="centre-items">
+                        <input type="submit" class="btn btn-lg item submit" value="Submit"/>
+                        </form>
+                        <form action="#" th:action="@{/manage/selectExercise}" method="post" class="centre-items">
+                            <button type="submit" th:name="theWorkoutName" th:value="${theExercise.workoutName}"
+                                    class="btn btn-dark btn-lg item return">Return</button>
+                        </form>
+                    </div>
+            </div>
+            <div class="container centre-items header">
+                <h3>Today:</h3>
+            </div>
+            <hr>
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Weight(kg)</th>
+                            <th>Set #</th>
+                            <th>Reps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tempExercise : ${todayExercises}">
+                            <td th:text="${tempExercise.weight}"/>
+                            <td th:text="${tempExercise.set}"/>
+                            <td th:text="${tempExercise.reps}"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <br><br><br>
+            <div class="container centre-items header">
+                <h3>Previous:</h3>
+            </div>
+            <hr>
+            <div class="container">
+                <table class="table table-bordered">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Date</th>
+                            <th>Weight(kg)</th>
+                            <th>Set #</th>
+                            <th>Reps</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="tempExercise : ${prevExercises}">
+                            <td th:text="${tempExercise.date}"/>
+                            <td th:text="${tempExercise.weight}"/>
+                            <td th:text="${tempExercise.set}"/>
+                            <td th:text="${tempExercise.reps}"/>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-    <div class="footer">
+    <div class="container footer">
         <hr>
         <a style="color: rgb(54, 81, 178);" href="//www.linkedin.com/in/adamcaragher/" role="button">
             <i class="fab fa-linkedin fa-2x"></i>
