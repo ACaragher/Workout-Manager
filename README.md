@@ -11,7 +11,7 @@
 
   ## About The Project
 
-<p>Web application built using Spring Boot (Spring Web, Spring Data JPA, Thymeleaf), MySQL and Google Charts. Allows a user to enter their workout information into the database and to view preivous entries.</p>
+<p>Web application built using Spring Boot (Spring Web, Spring Data JPA, Spring Security, Thymeleaf...), MySQL and Google Charts. Allows a user to enter their workout information into the database and to view preivous entries.</p>
 <p>Users can also see various stats and charts generated from their data within the application.</p>
 <br>
 
