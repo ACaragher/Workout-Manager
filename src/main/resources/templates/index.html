@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Exercise List</title>
@@ -16,11 +17,25 @@
             </div>
             <hr>
             <div class="container centre-items">
+                <p>
+                    User: <span sec:authentication="principal.username"></span>
+                    <br><br>
+                    Roles: <span sec:authentication="principal.authorities"></span>
+                </p>
+            </div>
+            <div class="container centre-items">
                 <a th:href="@{/manage/selectWorkout}"
                     class="btn btn-lg item submit">Enter</a>
             </div>
         </div>
+        <div>
+            <form action="#" th:action="@{/logout}" method="post">
+                <input type="submit" value="logout"/>
+            </form> 
+        </div>
     </div>
+
+
     <div class="footer">
         <hr>
         <a style="color: rgb(54, 81, 178);" href="//www.linkedin.com/in/adamcaragher/" role="button">
