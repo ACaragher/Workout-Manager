@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import ie.caragher.workoutmanager.entity.Exercise;
 
+@Repository
 public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     @Query(value="SELECT DISTINCT workout_name FROM exercise", nativeQuery=true)
     List<String> getDistinctWorkoutNames();
@@ -21,7 +23,7 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Integer> {
     @Query(value="SELECT * FROM exercise WHERE exercise_name = ?1 Order By exercise_date asc, set_number asc", nativeQuery = true)
     List<Exercise> findAllByExerciseNameAsc(String theExerciseName);
 
-    @Query(value="SELECT * FROM exercise WHERE exercise_date = (SELECT MIN(exercise_date) FROM exercise WHERE exercise_date > ?2 and exercise_name = ?1)", nativeQuery = true)
+    @Query(value="SELECT * FROM exercise WHERE exercise_date = (SELECT MIN(exercise_date) FROM exercise WHERE exercise_date = ?2 and exercise_name = ?1)", nativeQuery = true)
     List<Exercise> getExercisesOnDate(String theExerciseName, LocalDate date);
 
     @Query(value="SELECT * FROM exercise WHERE exercise_date = (SELECT MAX(exercise_date) FROM exercise)", nativeQuery = true)
